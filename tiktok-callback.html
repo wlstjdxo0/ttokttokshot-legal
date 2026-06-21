@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TikTok 인증 처리 중…</title>
+<style>body{font-family:system-ui,Segoe UI,Apple SD Gothic Neo,sans-serif;max-width:600px;margin:60px auto;padding:0 20px;line-height:1.7;color:#222;text-align:center}code{background:#f4f4f4;padding:2px 6px;border-radius:4px}</style>
+</head>
+<body>
+<h2>TikTok 인증 처리 중…</h2>
+<p id="msg">로컬 앱으로 전달하는 중입니다. 잠시만요…</p>
+<p id="manual" style="display:none">자동 전달이 안 되면 아래 코드를 터미널에 붙여넣으세요:<br><code id="code"></code></p>
+<script>
+  // HTTPS(github.io) -> http://localhost 로의 top-level 이동은 브라우저가 허용(localhost는 신뢰 출처).
+  var qs = window.location.search || '';
+  var local = 'http://localhost:8723/callback' + qs;
+  var p = new URLSearchParams(qs);
+  document.getElementById('code').textContent = p.get('code') || '(code 없음)';
+  if (p.get('code') || p.get('error')) {
+    document.getElementById('manual').style.display = 'block';
+    window.location.replace(local);
+  } else {
+    document.getElementById('msg').textContent = 'code 파라미터가 없습니다. OAuth 흐름을 다시 시작하세요.';
+  }
+</script>
+</body>
+</html>
